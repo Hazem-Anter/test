@@ -79,6 +79,23 @@ It uses a *dummy JSON API* 🧠 for product data and *Angular Signals* ⚡ for r
    ```bash
    git clone https://github.com/Abdelkarimo/ecommerce-front.git
    cd ecommerce-front
+2. 💻 Install Node.js and Angular CLI
+
+   bash
+   npm install -g @angular/cli
+   
+
+3. 📦 Install Project Dependencies
+
+   bash
+   npm install
+   
+
+4. 🚀 Start Development Server
+
+   bash
+   ng s -o
+   
 # 🚀 Usage
 
 ## 🏠 Home Page  
@@ -115,39 +132,72 @@ Add, edit, or delete products directly from the admin panel.
 ```
 ecommerce-front/
 ├─ public/
-│ └─ assets/
+│  └─ assets/                # static images and public assets
 ├─ src/
-│ ├─ index.html
-│ ├─ main.ts
-│ ├─ styles.css
-│ └─ app/
-│ ├─ app.config.ts
-│ ├─ core/
-│ │ ├─ auth/
-│ │ │ ├─ auth.ts
-│ │ │ ├─ auth-guard.ts
-│ │ │ └─ social-auth.ts
-│ │ ├─ interceptors/
-│ │ │ └─ token-interceptor.ts
-│ │ ├─ models/
-│ │ │ └─ product.model.ts
-│ │ └─ services/
-│ │ └─ data.ts
-│ ├─ features/
-│ │ ├─ landing/
-│ │ ├─ products/
-│ │ │ ├─ product-list/
-│ │ │ └─ product-detail/
-│ │ ├─ cart/
-│ │ ├─ auth/
-│ │ ├─ admin/
-│ │ └─ ...
-│ ├─ Layout/
-│ └─ shared/
+│  ├─ index.html
+│  ├─ main.ts                # bootstrap (uses appConfig)
+│  ├─ styles.css             # global styles
+│  └─ app/
+│     ├─ app.ts
+│     ├─ app.config.ts       # providers (router, http, firebase, ...)
+│     ├─ app.routes.ts
+│     ├─ app.html
+│     ├─ app.css
+│     ├─ core/               # core services, guards, models
+│     │  ├─ core-module.ts
+│     │  ├─ auth/
+│     │  │  ├─ auth.ts
+│     │  │  ├─ auth-guard.ts
+│     │  │  └─ social-auth.ts
+│     │  ├─ interceptors/
+│     │  │  └─ token-interceptor.ts
+│     │  ├─ interface/
+│     │  │  └─ User.ts
+│     │  ├─ models/
+│     │  │  └─ product.model.ts
+│     │  └─ services/
+│     │     └─ data.ts       # main Data service used by components
+│     ├─ environments/
+│     │  └─ environment.ts
+│     ├─ features/           # feature modules / pages
+│     │  ├─ landing/
+│     │  │  └─ landing/
+│     │  │     ├─ landing.ts
+│     │  │     ├─ landing.html
+│     │  │     └─ landing.css
+│     │  ├─ products/
+│     │  │  ├─ product-list/
+│     │  │  │  ├─ product-list.ts
+│     │  │  │  ├─ product-list.html
+│     │  │  │  └─ product-list.css
+│     │  │  └─ product-detail/
+│     │  │     ├─ product-detail.ts
+│     │  │     ├─ product-detail.html
+│     │  │     └─ product-detail.css
+│     │  ├─ cart/
+│     │  ├─ auth/
+│     │  ├─ admin/
+│     │  └─ ... (other feature folders: about, favourites, category-list, etc.)
+│     ├─ Layout/
+│     │  ├─ main-layout/
+│     │  └─ auth-layout/
+│     └─ shared/
+│        ├─ shared-module.ts
+│        └─ components/
+│           ├─ navbar/
+│           ├─ product-card/
+│           └─ filter-panel/
 └─ package.json
+
 ```
 
 ---
+
+Notes 📝
+
+- src/app/core/services/data.ts is the main application service (providedIn: 'root').
+- app.config.ts centralizes providers (router, HTTP, firebase, auth) and should be passed to bootstrapApplication() in main.ts.
+- Feature folders follow a component-per-folder pattern: component.ts, component.html, component.css.
 
 # 🔐 Authentication
 
@@ -216,3 +266,13 @@ This project uses the [DummyJSON API](https://dummyjson.com/) 🌍 to simulate b
 - No backend setup is required.  
 - All data is fetched directly from DummyJSON.  
 - You can replace DummyJSON later with a real backend by updating the API URLs in `data.ts`.
+
+## 🪄 Future Improvements
+
+1. Real API Integration – Replace DummyJSON with a live backend (.NET + SQL). ⚙  
+2. Authentication & Authorization – Implement JWT-based login, signup, and role management (admin/user). 🔑  
+3. Recommendations – Smart suggestions based on user activity. 🧠  
+4. Unit & Integration Testing. 🧪  
+
+## 🖼 ScreenShots
+
