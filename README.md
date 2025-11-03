@@ -227,7 +227,6 @@ Notes 📝
 - Secure logout for both Google and Facebook sessions.
 
 ---
-
 # 🧑‍💼 Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
@@ -298,5 +297,5 @@ Common EndPoints 🔗
 3. Recommendations – Smart suggestions based on user activity. 🧠  
 4. Unit & Integration Testing. 🧪  
 
-## 🖼 ScreenShots
+## 🖼 Screenshots
 
