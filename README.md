@@ -254,6 +254,30 @@ This project includes optional Firebase setup instructions for integrating a rea
 
 This project uses the [DummyJSON API](https://dummyjson.com/) 🌍 to simulate backend data for products, carts, and user authentication.
 
+Base URL 🌐  
+
+All requests use the public API:  
+
+bash  
+    https://dummyjson.com/  
+
+Implementation ⚙  
+HTTP communication is handled through Angular’s HttpClient within the data.service.ts file located in:  
+
+bash  
+src/app/core/services/data.ts  
+
+Example usage: 💡  
+
+bash  
+ private apiUrl = 'https://dummyjson.com/products';
+
+ getProducts(): Observable<any> {
+    return this.http.get(${this.apiUrl}?limit=100);
+  }
+
+Common EndPoints 🔗  
+
 | Feature | Endpoint | Method | Description |
 | -------- | -------- | ------- | ------------ |
 | Get all products | /products | GET | Retrieve all products |
