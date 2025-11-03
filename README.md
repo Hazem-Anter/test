@@ -1,201 +1,289 @@
+# 🛍️ E-Store Angular Application
 
-Below is a component-by-component breakdown (ordered by the routes file):
-
----
-
-### Layouts
-
-#### `MainLayout` (`./Layout/main-layout/main-layout.ts` + `.html`)
-- **Selector:** `app-main-layout`
-- **Purpose:** Shell for public/app pages (navbar + footer + `<router-outlet>`).
-- **Key:** imports `Navbar` and `Footer`. Template places `<router-outlet>` in `.main-container`.
-- **Notes:** Used as parent component for the majority of routes.
-
-#### `AuthLayout` (`./Layout/auth-layout/auth-layout.ts` + `.html`)
-- **Selector:** `app-auth-layout`
-- **Purpose:** Layout used for auth pages (login/register). Contains `app-navbar` and a `<router-outlet>` for auth views.
-- **Notes:** Lightweight wrapper.
+A *fully-featured e-commerce web application* built with *Angular 20*, allowing users to browse products 🛒, manage favourites ❤️ and carts 🧺, place orders 📦, and access an admin dashboard 🧑‍💼. Supports both **normal authentication** 🔐 and *social login* 🌐 (Google & Facebook) with persistent data using 💾 localStorage.
 
 ---
 
-### Public pages (inside `MainLayout`)
+## 🧭 Table of Contents
 
-#### `Landing` (`features/landing/landing.ts` + `landing.html`)
-- **Route:** `/` (empty path)
-- **Purpose:** Home / hero / category carousel.
-- **Key properties:** `categories` array, `isNavOpen`, `activeIndex`, auto-slide timer.
-- **Key methods:** `nextSlide()`, `prevSlide()`, `openNav()`, `closeNav()`.
-- **Template:** carousel + category cards linking to `category-list` with query param `category`.
-
-#### `CategoryList` (`features/category-list/category-list.ts` + `category-list.html`)
-- **Route:** `/category-list`
-- **Purpose:** Show products filtered by category query param (`?category=...`).
-- **Files:** `category-list.ts`, `category-list.html`, `category-list.css`
-- **Key behavior:** subscribes to `route.queryParams`, calls `Data.getFilteredCategories(category)` to load `products`, lists them using `app-product-card`.
-
-#### `About` (`features/about/about/about` — *not provided*)
-- **Route:** `/about`
-- **Purpose:** Static informational page about the store.
-- **Notes:** You did not share its implementation; expect simple static markup.
-
-#### `ProductList` (`features/products/product-list/product-list.ts` + `.html`)
-- **Route:** `/products`
-- **Purpose:** Display all products with a filter panel.
-- **Key properties:** `products`, `filteredProducts`, `loading`.
-- **Key methods:** `ngOnInit()` loads products via `Data.getProducts()`. `onProductsChanged(products)` receives filtered products from `FilterPanel`.
-- **Template:** shows a left `app-filter-panel` and a grid of `<app-product-card>` components.
-
-#### `ProductDetail` (`features/products/product-detail/product-detail.ts` + `.html`)
-- **Route:** `/products/:id`
-- **Purpose:** Product detail page with image gallery, quantity, add to cart, favourites, and reviews.
-- **Key properties:** `productId`, `product`, `selectedImage`, `quantity`, `isInFavourites`, `newReview`, `stars`, `user`, `hasReviewed`.
-- **Key methods:**
-  - `ngOnInit()` reads `id` param and calls `loadProduct()`.
-  - `loadProduct()` loads product via `Data.getProductById(id)`, merges local reviews stored in `localStorage` (key `reviews-${product.id}`), sets selected image.
-  - `addToCart()` → calls `productService.addToCart(productId, quantity)` (throws messages as implemented).
-  - `toggleFavourite()` → calls `productService.toggleFavourite(productId)`.
-  - `submitReview()` → validates, appends review to `localStorage` and to `product.reviews`.
-  - `incrementQuantity()`, `decrementQuantity()`, `setRating(star)`.
-- **Notes:** Reviews are persisted locally per-product; favourites and cart require user to be logged in (Data service enforces that).
-
-#### `ProductSearch` (`features/products/product-search/product-search.ts` + `.html`)
-- **Route:** `/search/:query`
-- **Purpose:** Search results page.
-- **Key:** reads `query` from route params, calls `Data.searchProducts(query)`, shows results with `<app-product-card>`.
+- [📖 Project Overview](#project-overview)
+- [✨ Features](#features)
+- [🧰 Technologies](#technologies)
+- [⚙️ Installation](#installation)
+- [🚀 Usage](#usage)
+- [📁 Project Structure](#project-structure)
+- [🔐 Authentication](#authentication)
+- [🌐 Social Login](#social-login)
+- [🧑‍💼 Admin Dashboard](#admin-dashboard)
+- [🔥 Firebase Integration](#firebase-integration)
+- [🔗 API Integration](#api-integration)
+- [🖼️ Screenshots](#screenshots)
+- [🪄 Future Improvements](#future-improvements)
+- [🖼️ Screenshots](#screenshots)
 
 ---
 
-### Protected user routes (guarded by `authGuard`)
+## 📖 Project Overview
 
-> `authGuard` checks normal `Auth` or `SocialAuth` current user and optionally enforces `route.data.role` (e.g., `admin`). If not logged in redirects to `/login`. If role mismatch redirects to `/`.
+This Angular project is a *client-side e-commerce platform* that simulates:
 
-#### `Cart` (`features/cart/cart/cart.ts` + `.html`)
-- **Route:** `/cart`
-- **Purpose:** Show cart items, manage quantities, remove items, show subtotal, and proceed to checkout.
-- **Key properties:** `allProducts`, `cartProductInfo`, `total`.
-- **Key methods:** `ngOnInit()` loads cart items from `Data.getCartItems()` and fetches product details for each via `Data.getProductById()`. `addMore()`, `deduct()`, `removeItem()`, `recalculateTotal()`, `proceedToCheckout()`.
+- 🛍️ Product catalog browsing
+- 🧩 Category filtering
+- 🔍 Search functionality
+- 🛒 Cart management
+- ❤️ Favourites (wishlist) management
+- 💳 Checkout and order confirmation
+- 🧑‍💼 Admin dashboard for monitoring users and orders
+- 🌐 Social login via Google and Facebook
+- 💾 Persistent user data through localStorage
 
-#### `Checkout` (`features/cart/checkout/checkout.ts` + `.html`)
-- **Route:** `/checkout`
-- **Purpose:** Collect shipping details, select payment method (credit card / PayPal / bank transfer), validate input, process orders.
-- **Key properties:** Shipping fields (firstName, lastName, email, ...), `selectedPaymentMethod`, card/paypal/bank fields, `cartItems`, `subtotal`, `shipping`, `tax`, `total`, `submitted`.
-- **Key methods:**
-  - `loadOrderSummary()` fetches cart, populates `cartItems`, `calculateTotals()`.
-  - `validateShippingForm()`, `processOrder()` (delegates to `processCreditCard()`, `processPayPal()`, `processBankTransfer()`).
-  - Payment handlers create `order` object, call `Data.saveOrder(order)`, `Data.clearCart()` and navigate to `/order-confirmation`.
-
-#### `OrderConfirmation` (`features/order-confirmation/order-confirmation.ts` + `.html`)
-- **Route:** `/order-confirmation`
-- **Purpose:** Displays order confirmation (order id, amount, shipping summary), shows countdown and redirects to landing/home.
-- **Key:** uses `Data.GetLastOrder()` to load last saved order.
-
-#### `FavouriteList` (`features/favourites/favourite-list/favourite-list.ts` + `.html`)
-- **Route:** `/favourites`
-- **Purpose:** Show user's favourites, allow removing or adding favourite items to cart.
-- **Key properties:** `allFavoriteInfo`, `allFavorites`.
-- **Key methods:** `ngOnInit()` loads favorites from `Data.getFavouritesItems()` and fetches product details. `RemoveFromWishlist(prodId)`, `AddToCart(prodId)`.
+It uses a *dummy JSON API* 🧠 for product data and *Angular Signals* ⚡ for reactive state management.
 
 ---
 
-### Admin (under MainLayout > admin route)
+## ✨ Features
 
-#### `AdminDashboard` (`features/admin/admin-dashboard/admin-dashboard.ts` + `.html`)
-- **Route:** `/admin`
-- **Purpose:** Admin overview (summary cards: total users, total orders, pending orders) and tables of users and orders.
-- **Key properties / methods:** `users`, `orders`, getters `totalUsers`, `totalOrders`, `pendingOrders`.
-- **Access:** Protected by `authGuard` and `data: { role: 'admin' }`.
+### 👤 User Features
 
-#### `ProductCrud` (`features/admin/product-crud/product-crud`)
-- **Route:** `/admin/crud`
-- **Purpose:** (Admin-only) UI to create/read/update/delete products.
-- **Notes:** You referenced `ProductCrud` in the routes but did not send its implementation. Expect CRUD operations (likely calling an API or manipulating local state). Keep this component protected by the `admin` role.
+- *Product Catalog:* Browse all products with search and category filters.
+- *Favourites/Wishlist:* Add/remove favourite products.
+- *Shopping Cart:* Add/remove products, adjust quantity, and view cart summary.
+- *Order Management:* Place orders and view order confirmation details.
+- *Social Login:* Sign in with Google or Facebook.
+- *Responsive Design:* Fully responsive UI with Bootstrap 5.
+- *Local Storage:* User, cart, favourites, and orders stored persistently.
 
----
+### 🧑‍💼 Admin Features
 
-### Auth pages (AuthLayout)
-
-#### `Login` (`features/auth/login/login.ts` + `.html`)
-- **Route:** `/login`
-- **Purpose:** Normal login and social login via Firebase popup (Google & Facebook).
-- **Key methods:**
-  - `onSubmit()` → uses `Auth.login(formData)`.
-  - `loginWithGoogle()` → uses Firebase `GoogleAuthProvider` and `signInWithPopup` to obtain user, maps to `User` model then `handleSocialUser()`.
-  - `loginWithFacebook()` → similar to Google, with special handling for `auth/account-exists-with-different-credential` (attempts to link accounts).
-  - `handleSocialUser(mappedUser)` saves or logs in user, updates `Data` and `Auth` state, and navigates to `/` or `/register`.
-- **Notes:** After social login, `Login` may redirect new users to registration to complete profile.
-
-#### `Register` (`features/auth/register/register.ts` + `.html`)
-- **Route:** `/register`
-- **Purpose:** Register a normal user (email/password) or complete social registration.
-- **Key methods:**
-  - `onSubmit()` calls `Auth.register(formData)` and displays success/error messages.
-  - `registerWithGoogle()` / `registerWithFacebook()` call unified `handleSocialLogin(provider, source)` which signs in with popup, maps user, `saveSocialUser()` stores user and sets session.
+- *Dashboard Overview:* Total users, total orders, pending orders.
+- *Users Table:* View registered users and roles.
+- *Orders Table:* View all orders with status (Pending/Delivered).
+- *Role-Based Access:* Admin routes protected with *authGuard*.
 
 ---
 
-### Guard
+## 🧰 Technologies
 
-#### `authGuard` (`core/auth/auth-guard.ts`)
-- **Type:** functional `CanActivateFn`
-- **Purpose:** Protects routes by checking either `Auth.getCurrentUser()` or `SocialAuth.getCurrentUser()` and optionally enforces `route.data.role`.
-- **Behavior:**
-  - If not logged in → `router.createUrlTree(['/login'])`.
-  - If `data.role` exists and user role ≠ required role → redirect to `/`.
-  - Otherwise allow access.
-
----
-
-### Shared Components (used by many routes)
-
-#### `Navbar` / `Footer`
-- Provide site navigation, show cart/favourites counts (likely reading `Data` signals), used inside both layouts.
-
-#### `ProductCard` (`shared/components/product-card/product-card`)
-- Displays product thumbnail, title, price, rating, add-to-cart and add-to-favourites actions. Used by `ProductList`, `CategoryList`, `ProductSearch`, etc.
-
-#### `FilterPanel` (`shared/components/filter-panel/filter-panel`)
-- Emits `productsChanged` with filtered products; used by `ProductList`.
+- *Frontend:* Angular 20, TypeScript, RxJS
+- *Styling:* Bootstrap 5, FontAwesome
+- *Authentication:* Custom + Social (Google & Facebook)
+- *State Management:* Angular Signals (Reactive user & social state)
+- *Backend:* Dummy JSON API ([https://dummyjson.com/products](https://dummyjson.com/products))
+- *Analytics:* Firebase Analytics
+- *Tools:* VS Code, Git
 
 ---
 
-## Where logic lives (quick map)
-- **API calls:** `Data.getProducts()`, `getProductById()`, `searchProducts()`, `getFilteredCategories()`
-- **Auth logic:** `Auth.register()`, `Auth.login()`, `Auth.logout()`, signal `auth.user`
-- **Social login:** `SocialAuth.initGoogle()` / `loginWithFacebook()` / `loginSocial()`
-- **Cart & Favourites:** `Data.addToCart()`, `Data.removeFromCart()`, `Data.addToFavourites()`, `Data.toggleFavourite()`
-- **Orders:** `Data.saveOrder()` → read by `OrderConfirmation` via `Data.GetLastOrder()`
-- **Route protection:** `authGuard` (checks `Auth` and `SocialAuth`)
+## ⚙️ Installation
 
----
+1. 📥 Clone the repository:
+   bash
+   git clone https://github.com/Abdelkarimo/ecommerce-front.git
+   cd ecommerce-front
+   
+2. 💻 Install Node.js and Angular CLI
 
-## Notes & Recommendations
-- **ProductCrud** implementation was not provided. Keep it admin-only and ensure it uses the same `Data` service or connects to the real API for create/update/delete.
-- **About** and any minor pages not sent are assumed to be static; keep them inside `features/about` and reference from routes.
-- **Consistency:** most components expect `Data` to return objects shaped like the DummyJSON product model — keep types aligned.
-- **Security:** current auth is simulated via `localStorage`. Replace with a real backend + secure JWT flows for production.
+   bash
+   npm install -g @angular/cli
+   
 
----
+3. 📦 Install Project Dependencies
 
-### Quick reference: route -> component file paths (based on your structure)
-- `''` (landing) → `features/landing/landing.ts` + `landing.html`
-- `category-list` → `features/category-list/category-list.ts` + `category-list.html`
-- `about` → `features/about/about/about.ts` + `.html` (not provided)
-- `products` → `features/products/product-list/product-list.ts` + `.html`
-- `products/:id` → `features/products/product-detail/product-detail.ts` + `.html`
-- `search/:query` → `features/products/product-search/product-search.ts` + `.html`
-- `cart` → `features/cart/cart/cart.ts` + `.html`
-- `checkout` → `features/cart/checkout/checkout.ts` + `.html`
-- `order-confirmation` → `features/order-confirmation/order-confirmation.ts` + `.html`
-- `favourites` → `features/favourites/favourite-list/favourite-list.ts` + `.html`
-- `admin` → `features/admin/admin-dashboard/admin-dashboard.ts` + `.html`
-- `admin/crud` → `features/admin/product-crud/product-crud.ts` (not provided)
-- `login` → `features/auth/login/login.ts` + `.html`
-- `register` → `features/auth/register/register.ts` + `.html`
+   bash
+   npm install
+   
 
----
+4. 🚀 Start Development Server
 
-If you want, I can now:
-- 1) Merge this Routes & Components section into the **full README** and regenerate the entire `README.md` so it replaces the existing README you already have; **or**
-- 2) Generate a **developer reference file** (`DOCS.md`) that expands each component into an individual doc with code snippets and sample usage (perfect for handoff).
+   bash
+   ng s -o
+   
 
-Which would you like me to do next?
+## 🚀 Usage
+
+1. *Home Page* 🏠 – Browse featured products and categories.
+2. *Product Search* 🔎 - Use the search bar in the navbar to find items quickly.
+3. *Product Details* 🛍️ – Click any product to view images, description, price, and customer reviews.
+4. *Add to Cart* 🧺 - Add items to your cart from detail pages.
+5. *Cart* 🧾 – Add or remove products, update quantities, and view the total before checkout.
+6. *Authentication* 🔐 -
+
+   - Sign up ✍️ to create a new account.
+   - Sign in 🔑 to access your card, favorites and orders.
+
+7. *Favourites* ❤️ - Save products you like for later.
+8. *Checkout* 💳 – Review your cart, enter shipping details, and confirm the order.
+9. *Admin* 🧑‍💼 - Add, edit, or delete products directly from the admin panel
+
+## 📁 Project structure
+
+Below is a concise, easy-to-scan tree for the repository (top-level files first, then src/ with important folders/components):
+
+
+ecommerce-front/
+├─ public/
+│  └─ assets/                # static images and public assets
+├─ src/
+│  ├─ index.html
+│  ├─ main.ts                # bootstrap (uses `appConfig`)
+│  ├─ styles.css             # global styles
+│  └─ app/
+│     ├─ app.ts
+│     ├─ app.config.ts       # providers (router, http, firebase, ...)
+│     ├─ app.routes.ts
+│     ├─ app.html
+│     ├─ app.css
+│     ├─ core/               # core services, guards, models
+│     │  ├─ core-module.ts
+│     │  ├─ auth/
+│     │  │  ├─ auth.ts
+│     │  │  ├─ auth-guard.ts
+│     │  │  └─ social-auth.ts
+│     │  ├─ interceptors/
+│     │  │  └─ token-interceptor.ts
+│     │  ├─ interface/
+│     │  │  └─ User.ts
+│     │  ├─ models/
+│     │  │  └─ product.model.ts
+│     │  └─ services/
+│     │     └─ data.ts       # main Data service used by components
+│     ├─ environments/
+│     │  └─ environment.ts
+│     ├─ features/           # feature modules / pages
+│     │  ├─ landing/
+│     │  │  └─ landing/
+│     │  │     ├─ landing.ts
+│     │  │     ├─ landing.html
+│     │  │     └─ landing.css
+│     │  ├─ products/
+│     │  │  ├─ product-list/
+│     │  │  │  ├─ product-list.ts
+│     │  │  │  ├─ product-list.html
+│     │  │  │  └─ product-list.css
+│     │  │  └─ product-detail/
+│     │  │     ├─ product-detail.ts
+│     │  │     ├─ product-detail.html
+│     │  │     └─ product-detail.css
+│     │  ├─ cart/
+│     │  ├─ auth/
+│     │  ├─ admin/
+│     │  └─ ... (other feature folders: about, favourites, category-list, etc.)
+│     ├─ Layout/
+│     │  ├─ main-layout/
+│     │  └─ auth-layout/
+│     └─ shared/
+│        ├─ shared-module.ts
+│        └─ components/
+│           ├─ navbar/
+│           ├─ product-card/
+│           └─ filter-panel/
+└─ package.json
+
+
+
+Notes 📝
+
+- src/app/core/services/data.ts is the main application service (providedIn: 'root').
+- app.config.ts centralizes providers (router, HTTP, firebase, auth) and should be passed to bootstrapApplication() in main.ts.
+- Feature folders follow a component-per-folder pattern: component.ts, component.html, component.css.
+
+## 🔐 Authentication
+
+- Register and log in users using local storage as mock persistence. 💾
+
+- Supports role-based access (Admin and User). 👑
+
+- Maintains login state using Angular signals ⚡.
+
+- Includes logout and session validation functionality 🔄.
+
+- Automatically assigns admin privileges to predefined admin accounts. 🧑‍💼
+
+## 🌐 Social Login
+
+### 🔵 Google Login
+
+- Uses Google Identity Services for authentication.  
+- Retrieves and decodes user information (name, email, profile picture).  
+- Automatically registers or updates the user in the local data store.  
+
+### 🔷 Facebook Login
+
+- Integrates the Facebook SDK for secure authentication.  
+- Requests access to basic profile and email information.  
+- Saves or updates user data locally for seamless future access.  
+
+### 🔁 Shared Features
+
+- Unified logic for saving, updating, and managing social user sessions.  
+- Automatic session restoration on reload.  
+- Secure logout for both Google and Facebook sessions.  
+
+## 🧑‍💼 Admin Dashboard
+
+A standalone component displaying mock data and key statistics for administrators.  
+
+- Displays registered users and order lists. 👥  
+- Shows total users, total orders, and pending orders. 📊  
+- Provides a quick overview of platform activity. 🔎  
+- Demonstrates how role-based access can control admin views. 🧱  
+
+## 🔥 Firebase Integration
+
+This project includes optional Firebase setup instructions for integrating a real backend. ☁️  
+
+- Authentication 🔐  
+- Firestore Database 🗄️  
+- Cloud Storage 💾  
+- Hosting for deployment 🚀  
+
+## 🔗 API Integration
+
+This project uses the [DummyJSON API](https://dummyjson.com/) 🌍 to simulate backend data for products, carts, and user authentication.
+
+*Base URL* 🌐  
+
+All requests use the public API:  
+
+bash  
+    https://dummyjson.com/  
+
+*Implementation* ⚙️  
+HTTP communication is handled through Angular’s HttpClient within the data.service.ts file located in:  
+
+bash  
+src/app/core/services/data.ts  
+
+Example usage: 💡  
+
+bash  
+ private apiUrl = 'https://dummyjson.com/products';
+
+ getProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}?limit=100`);
+  }
+
+*Common EndPoints* 🔗  
+
+| Feature 🧩                 | Endpoint 🌐                       | Method ⚙️ | Description 📝                           |
+| ------------------------ | ------------------------------- | ------ | -------------------------------------- |
+| Get all products 🛍️        | /products                     | GET    | Retrieve all products                  |
+| Get single product 🔎       | /products/{id}                | GET    | Retrieve details of a specific product |
+| Search products 🔍          | /products/search?q={query}    | GET    | Search by keyword                      |
+| Get categories 🏷️          | /products/categories          | GET    | Retrieve all product categories        |
+| Get products by category 📦 | /products/category/{category} | GET    | Retrieve products in a given category  |
+
+Notes 🗒️  
+
+- No backend setup is required.  
+- All data is fetched directly from DummyJSON.  
+- You can replace DummyJSON later with a real backend by updating the API URLs in data.ts.  
+
+## 🪄 Future Improvements
+
+1. Real API Integration – Replace DummyJSON with a live backend (.NET + SQL). ⚙️  
+2. Authentication & Authorization – Implement JWT-based login, signup, and role management (admin/user). 🔑  
+3. Recommendations – Smart suggestions based on user activity. 🧠  
+4. Unit & Integration Testing. 🧪  
+
+## 🖼️ ScreenShots
