@@ -9,16 +9,16 @@ A *fully-featured e-commerce web application* built with *Angular 20*, allowing 
 - [📖 Project Overview](#-project-overview)
 - [✨ Features](#-features)
 - [🧰 Technologies](#-technologies)
-- [⚙️ Installation](#-installation)
+- [⚙️ Installation](#installation)
 - [🚀 Usage](#-usage)
 - [📁 Project Structure](#-project-structure)
 - [🔐 Authentication](#-authentication)
 - [🌐 Social Login](#-social-login)
-- [🧑‍💼 Admin Dashboard](#-admin-dashboard)
+- [🧑‍💼 Admin Dashboard](#admin-dashboard)
 - [🔥 Firebase Integration](#-firebase-integration)
 - [🔗 API Integration](#-api-integration)
 - [🪄 Future Improvements](#-future-improvements)
-- [🖼️ Screenshots](#-screenshots)
+- [🖼️ Screenshots](#screenshots)
 
 ---
 
@@ -73,7 +73,7 @@ It uses a *dummy JSON API* 🧠 for product data and *Angular Signals* ⚡ for r
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 1. 📥 Clone the repository:
    ```bash
@@ -228,7 +228,7 @@ Notes 📝
 
 ---
 
-# 🧑‍💼 Admin Dashboard
+# Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
 
@@ -297,5 +297,5 @@ Common EndPoints 🔗
 3. Recommendations – Smart suggestions based on user activity. 🧠  
 4. Unit & Integration Testing. 🧪  
 
-## 🖼 ScreenShots
+## ScreenShots
 
