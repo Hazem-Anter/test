@@ -112,7 +112,7 @@ Add, edit, or delete products directly from the admin panel.
 ---
 
 # 📁 Project Structure
-
+```
 ecommerce-front/
 ├─ public/
 │ └─ assets/
@@ -145,7 +145,7 @@ ecommerce-front/
 │ ├─ Layout/
 │ └─ shared/
 └─ package.json
-
+```
 
 ---
 
