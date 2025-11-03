@@ -227,7 +227,7 @@ Notes 📝
 - Secure logout for both Google and Facebook sessions.
 
 ---
-# Admin Dashboard
+# 🧑‍💼 Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
 
