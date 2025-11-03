@@ -6,19 +6,19 @@ A *fully-featured e-commerce web application* built with *Angular 20*, allowing 
 
 ## 🧭 Table of Contents
 
-- [📖 Project Overview](#-project-overview)
-- [✨ Features](#-features)
-- [🧰 Technologies](#-technologies)
-- [⚙️ Installation](#️-installation)
-- [🚀 Usage](#-usage)
-- [📁 Project Structure](#-project-structure)
-- [🔐 Authentication](#-authentication)
-- [🌐 Social Login](#-social-login)
-- [🧑‍💼 Admin Dashboard](#-admin-dashboard)
-- [🔥 Firebase Integration](#-firebase-integration)
-- [🔗 API Integration](#-api-integration)
-- [🪄 Future Improvements](#-future-improvements)
-- [🖼️ Screenshots](#-screenshots)
+- [📖 Project Overview](#project-overview)
+- [✨ Features](#features)
+- [🧰 Technologies](#technologies)
+- [⚙️ Installation](#installation)
+- [🚀 Usage](#usage)
+- [📁 Project Structure](#project-structure)
+- [🔐 Authentication](#authentication)
+- [🌐 Social Login](#social-login)
+- [🧑‍💼 Admin Dashboard](#admin-dashboard)
+- [🔥 Firebase Integration](#firebase-integration)
+- [🔗 API Integration](#api-integration)
+- [🪄 Future Improvements](#future-improvements)
+- [🖼️ Screenshots](#screenshots)
 
 ---
 
