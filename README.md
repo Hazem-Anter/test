@@ -14,7 +14,7 @@ A *fully-featured e-commerce web application* built with *Angular 20*, allowing 
 - [📁 Project Structure](#-project-structure)
 - [🔐 Authentication](#-authentication)
 - [🌐 Social Login](#-social-login)
-- [🧑‍💼 Admin Dashboard](#admin-dashboard)
+- [🧑‍💼 Admin Dashboard](#-admin-dashboard)
 - [🔥 Firebase Integration](#-firebase-integration)
 - [🔗 API Integration](#-api-integration)
 - [🪄 Future Improvements](#-future-improvements)
@@ -228,7 +228,7 @@ Notes 📝
 
 ---
 
-# Admin Dashboard
+# 🧑‍💼 Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
 
