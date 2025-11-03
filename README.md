@@ -18,7 +18,7 @@ A *fully-featured e-commerce web application* built with *Angular 20*, allowing 
 - [🔥 Firebase Integration](#-firebase-integration)
 - [🔗 API Integration](#-api-integration)
 - [🪄 Future Improvements](#-future-improvements)
-- [🖼️ Screenshots](#screenshots)
+- [🖼️ Screenshots](#-screenshots)
 
 ---
 
@@ -297,5 +297,5 @@ Common EndPoints 🔗
 3. Recommendations – Smart suggestions based on user activity. 🧠  
 4. Unit & Integration Testing. 🧪  
 
-## ScreenShots
+## 🖼️ ScreenShots
 
