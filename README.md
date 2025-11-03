@@ -79,141 +79,140 @@ It uses a *dummy JSON API* 🧠 for product data and *Angular Signals* ⚡ for r
    ```bash
    git clone https://github.com/Abdelkarimo/ecommerce-front.git
    cd ecommerce-front
-🚀 Usage
+# 🚀 Usage
 
-Home Page 🏠 – Browse featured products and categories.
+## 🏠 Home Page  
+Browse featured products and categories.
 
-Product Search 🔎 - Use the search bar in the navbar to find items quickly.
+## 🔎 Product Search  
+Use the search bar in the navbar to find items quickly.
 
-Product Details 🛍️ – Click any product to view images, description, price, and customer reviews.
+## 🛍️ Product Details  
+Click any product to view images, description, price, and customer reviews.
 
-Add to Cart 🧺 - Add items to your cart from detail pages.
+## 🧺 Add to Cart  
+Add items to your cart from detail pages.
 
-Cart 🧾 – Add or remove products, update quantities, and view the total before checkout.
+## 🧾 Cart  
+Add or remove products, update quantities, and view the total before checkout.
 
-Authentication 🔐 -
+## 🔐 Authentication  
+- Sign up ✍️ to create a new account.  
+- Sign in 🔑 to access your cart, favorites, and orders.
 
-Sign up ✍️ to create a new account.
+## ❤️ Favourites  
+Save products you like for later.
 
-Sign in 🔑 to access your card, favorites and orders.
+## 💳 Checkout  
+Review your cart, enter shipping details, and confirm the order.
 
-Favourites ❤️ - Save products you like for later.
+## 🧑‍💼 Admin  
+Add, edit, or delete products directly from the admin panel.
 
-Checkout 💳 – Review your cart, enter shipping details, and confirm the order.
+---
 
-Admin 🧑‍💼 - Add, edit, or delete products directly from the admin panel.
+# 📁 Project Structure
 
 ecommerce-front/
 ├─ public/
-│  └─ assets/
+│ └─ assets/
 ├─ src/
-│  ├─ index.html
-│  ├─ main.ts
-│  ├─ styles.css
-│  └─ app/
-│     ├─ app.config.ts
-│     ├─ core/
-│     │  ├─ auth/
-│     │  │  ├─ auth.ts
-│     │  │  ├─ auth-guard.ts
-│     │  │  └─ social-auth.ts
-│     │  ├─ interceptors/
-│     │  │  └─ token-interceptor.ts
-│     │  ├─ models/
-│     │  │  └─ product.model.ts
-│     │  └─ services/
-│     │     └─ data.ts
-│     ├─ features/
-│     │  ├─ landing/
-│     │  ├─ products/
-│     │  │  ├─ product-list/
-│     │  │  └─ product-detail/
-│     │  ├─ cart/
-│     │  ├─ auth/
-│     │  ├─ admin/
-│     │  └─ ...
-│     ├─ Layout/
-│     └─ shared/
+│ ├─ index.html
+│ ├─ main.ts
+│ ├─ styles.css
+│ └─ app/
+│ ├─ app.config.ts
+│ ├─ core/
+│ │ ├─ auth/
+│ │ │ ├─ auth.ts
+│ │ │ ├─ auth-guard.ts
+│ │ │ └─ social-auth.ts
+│ │ ├─ interceptors/
+│ │ │ └─ token-interceptor.ts
+│ │ ├─ models/
+│ │ │ └─ product.model.ts
+│ │ └─ services/
+│ │ └─ data.ts
+│ ├─ features/
+│ │ ├─ landing/
+│ │ ├─ products/
+│ │ │ ├─ product-list/
+│ │ │ └─ product-detail/
+│ │ ├─ cart/
+│ │ ├─ auth/
+│ │ ├─ admin/
+│ │ └─ ...
+│ ├─ Layout/
+│ └─ shared/
 └─ package.json
 
-🔐 Authentication
 
-Register and log in users using local storage as mock persistence.
+---
 
-Supports role-based access (Admin and User).
+# 🔐 Authentication
 
-Maintains login state using Angular signals.
+- Register and log in users using local storage as mock persistence.  
+- Supports role-based access (Admin and User).  
+- Maintains login state using Angular signals.  
+- Includes logout and session validation functionality.  
+- Automatically assigns admin privileges to predefined admin accounts.
 
-Includes logout and session validation functionality.
+---
 
-Automatically assigns admin privileges to predefined admin accounts.
+# 🌐 Social Login
 
-🌐 Social Login
-🔵 Google Login
+## 🔵 Google Login
+- Uses Google Identity Services for authentication.  
+- Retrieves and decodes user information (name, email, profile picture).  
+- Automatically registers or updates the user in the local data store.
 
-Uses Google Identity Services for authentication.
+## 🔷 Facebook Login
+- Integrates the Facebook SDK for secure authentication.  
+- Requests access to basic profile and email information.  
+- Saves or updates user data locally for seamless future access.
 
-Retrieves and decodes user information (name, email, profile picture).
+## 🔁 Shared Features
+- Unified logic for saving, updating, and managing social user sessions.  
+- Automatic session restoration on reload.  
+- Secure logout for both Google and Facebook sessions.
 
-Automatically registers or updates the user in the local data store.
+---
 
-🔷 Facebook Login
-
-Integrates the Facebook SDK for secure authentication.
-
-Requests access to basic profile and email information.
-
-Saves or updates user data locally for seamless future access.
-
-🔁 Shared Features
-
-Unified logic for saving, updating, and managing social user sessions.
-
-Automatic session restoration on reload.
-
-Secure logout for both Google and Facebook sessions.
-
-🧑‍💼 Admin Dashboard
+# 🧑‍💼 Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
 
-Displays registered users and order lists.
+- Displays registered users and order lists.  
+- Shows total users, total orders, and pending orders.  
+- Provides a quick overview of platform activity.  
+- Demonstrates how role-based access can control admin views.
 
-Shows total users, total orders, and pending orders.
+---
 
-Provides a quick overview of platform activity.
-
-Demonstrates how role-based access can control admin views.
-
-🔥 Firebase Integration
+# 🔥 Firebase Integration
 
 This project includes optional Firebase setup instructions for integrating a real backend.
 
-Authentication
+- Authentication  
+- Firestore Database  
+- Cloud Storage  
+- Hosting for deployment  
 
-Firestore Database
+---
 
-Cloud Storage
+# 🔗 API Integration
 
-Hosting for deployment
+This project uses the [DummyJSON API](https://dummyjson.com/) 🌍 to simulate backend data for products, carts, and user authentication.
 
-🔗 API Integration
+| Feature | Endpoint | Method | Description |
+| -------- | -------- | ------- | ------------ |
+| Get all products | /products | GET | Retrieve all products |
+| Get single product | /products/{id} | GET | Retrieve details of a specific product |
+| Search products | /products/search?q={query} | GET | Search by keyword |
+| Get categories | /products/categories | GET | Retrieve all product categories |
+| Get products by category | /products/category/{category} | GET | Retrieve products in a given category |
 
-This project uses the DummyJSON API
- to simulate backend data for products, carts, and user authentication.
-
- | Feature                  | Endpoint                      | Method | Description                            |
-| ------------------------ | ----------------------------- | ------ | -------------------------------------- |
-| Get all products         | /products                     | GET    | Retrieve all products                  |
-| Get single product       | /products/{id}                | GET    | Retrieve details of a specific product |
-| Search products          | /products/search?q={query}    | GET    | Search by keyword                      |
-| Get categories           | /products/categories          | GET    | Retrieve all product categories        |
-| Get products by category | /products/category/{category} | GET    | Retrieve products in a given category  |
-
-Notes:
-
-No backend setup is required.
-
-All data is fetched directly from DummyJSON.
-
-You can replace DummyJSON later with a real backend by updating the API URLs in data.ts.
+### 🗒️ Notes:
+- No backend setup is required.  
+- All data is fetched directly from DummyJSON.  
+- You can replace DummyJSON later with a real backend by updating the API URLs in `data.ts`.
