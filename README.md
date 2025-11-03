@@ -227,15 +227,15 @@ Notes 📝
 - Secure logout for both Google and Facebook sessions.
 
 ---
+
 # 🧑‍💼 Admin Dashboard
 
 A standalone component displaying mock data and key statistics for administrators.
 
-- Displays registered users and order lists.  
-- Shows total users, total orders, and pending orders.  
-- Provides a quick overview of platform activity.  
+- Displays registered users and order lists.
+- Shows total users, total orders, and pending orders.
+- Provides a quick overview of platform activity.
 - Demonstrates how role-based access can control admin views.
-
 ---
 
 # 🔥 Firebase Integration
