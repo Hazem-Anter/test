@@ -6,20 +6,19 @@ A *fully-featured e-commerce web application* built with *Angular 20*, allowing 
 
 ## 🧭 Table of Contents
 
-- [📖 Project Overview](#project-overview)
-- [✨ Features](#features)
-- [🧰 Technologies](#technologies)
-- [⚙️ Installation](#installation)
-- [🚀 Usage](#usage)
-- [📁 Project Structure](#project-structure)
-- [🔐 Authentication](#authentication)
-- [🌐 Social Login](#social-login)
-- [🧑‍💼 Admin Dashboard](#admin-dashboard)
-- [🔥 Firebase Integration](#firebase-integration)
-- [🔗 API Integration](#api-integration)
-- [🖼️ Screenshots](#screenshots)
-- [🪄 Future Improvements](#future-improvements)
-- [🖼️ Screenshots](#screenshots)
+- [📖 Project Overview](#-project-overview)
+- [✨ Features](#-features)
+- [🧰 Technologies](#-technologies)
+- [⚙️ Installation](#️-installation)
+- [🚀 Usage](#-usage)
+- [📁 Project Structure](#-project-structure)
+- [🔐 Authentication](#-authentication)
+- [🌐 Social Login](#-social-login)
+- [🧑‍💼 Admin Dashboard](#-admin-dashboard)
+- [🔥 Firebase Integration](#-firebase-integration)
+- [🔗 API Integration](#-api-integration)
+- [🪄 Future Improvements](#-future-improvements)
+- [🖼️ Screenshots](#-screenshots)
 
 ---
 
@@ -77,213 +76,144 @@ It uses a *dummy JSON API* 🧠 for product data and *Angular Signals* ⚡ for r
 ## ⚙️ Installation
 
 1. 📥 Clone the repository:
-   bash
+   ```bash
    git clone https://github.com/Abdelkarimo/ecommerce-front.git
    cd ecommerce-front
-   
-2. 💻 Install Node.js and Angular CLI
+🚀 Usage
 
-   bash
-   npm install -g @angular/cli
-   
+Home Page 🏠 – Browse featured products and categories.
 
-3. 📦 Install Project Dependencies
+Product Search 🔎 - Use the search bar in the navbar to find items quickly.
 
-   bash
-   npm install
-   
+Product Details 🛍️ – Click any product to view images, description, price, and customer reviews.
 
-4. 🚀 Start Development Server
+Add to Cart 🧺 - Add items to your cart from detail pages.
 
-   bash
-   ng s -o
-   
+Cart 🧾 – Add or remove products, update quantities, and view the total before checkout.
 
-## 🚀 Usage
+Authentication 🔐 -
 
-1. *Home Page* 🏠 – Browse featured products and categories.
-2. *Product Search* 🔎 - Use the search bar in the navbar to find items quickly.
-3. *Product Details* 🛍️ – Click any product to view images, description, price, and customer reviews.
-4. *Add to Cart* 🧺 - Add items to your cart from detail pages.
-5. *Cart* 🧾 – Add or remove products, update quantities, and view the total before checkout.
-6. *Authentication* 🔐 -
+Sign up ✍️ to create a new account.
 
-   - Sign up ✍️ to create a new account.
-   - Sign in 🔑 to access your card, favorites and orders.
+Sign in 🔑 to access your card, favorites and orders.
 
-7. *Favourites* ❤️ - Save products you like for later.
-8. *Checkout* 💳 – Review your cart, enter shipping details, and confirm the order.
-9. *Admin* 🧑‍💼 - Add, edit, or delete products directly from the admin panel
+Favourites ❤️ - Save products you like for later.
 
-## 📁 Project structure
+Checkout 💳 – Review your cart, enter shipping details, and confirm the order.
 
-Below is a concise, easy-to-scan tree for the repository (top-level files first, then src/ with important folders/components):
-
+Admin 🧑‍💼 - Add, edit, or delete products directly from the admin panel.
 
 ecommerce-front/
 ├─ public/
-│  └─ assets/                # static images and public assets
+│  └─ assets/
 ├─ src/
 │  ├─ index.html
-│  ├─ main.ts                # bootstrap (uses `appConfig`)
-│  ├─ styles.css             # global styles
+│  ├─ main.ts
+│  ├─ styles.css
 │  └─ app/
-│     ├─ app.ts
-│     ├─ app.config.ts       # providers (router, http, firebase, ...)
-│     ├─ app.routes.ts
-│     ├─ app.html
-│     ├─ app.css
-│     ├─ core/               # core services, guards, models
-│     │  ├─ core-module.ts
+│     ├─ app.config.ts
+│     ├─ core/
 │     │  ├─ auth/
 │     │  │  ├─ auth.ts
 │     │  │  ├─ auth-guard.ts
 │     │  │  └─ social-auth.ts
 │     │  ├─ interceptors/
 │     │  │  └─ token-interceptor.ts
-│     │  ├─ interface/
-│     │  │  └─ User.ts
 │     │  ├─ models/
 │     │  │  └─ product.model.ts
 │     │  └─ services/
-│     │     └─ data.ts       # main Data service used by components
-│     ├─ environments/
-│     │  └─ environment.ts
-│     ├─ features/           # feature modules / pages
+│     │     └─ data.ts
+│     ├─ features/
 │     │  ├─ landing/
-│     │  │  └─ landing/
-│     │  │     ├─ landing.ts
-│     │  │     ├─ landing.html
-│     │  │     └─ landing.css
 │     │  ├─ products/
 │     │  │  ├─ product-list/
-│     │  │  │  ├─ product-list.ts
-│     │  │  │  ├─ product-list.html
-│     │  │  │  └─ product-list.css
 │     │  │  └─ product-detail/
-│     │  │     ├─ product-detail.ts
-│     │  │     ├─ product-detail.html
-│     │  │     └─ product-detail.css
 │     │  ├─ cart/
 │     │  ├─ auth/
 │     │  ├─ admin/
-│     │  └─ ... (other feature folders: about, favourites, category-list, etc.)
+│     │  └─ ...
 │     ├─ Layout/
-│     │  ├─ main-layout/
-│     │  └─ auth-layout/
 │     └─ shared/
-│        ├─ shared-module.ts
-│        └─ components/
-│           ├─ navbar/
-│           ├─ product-card/
-│           └─ filter-panel/
 └─ package.json
 
+🔐 Authentication
 
+Register and log in users using local storage as mock persistence.
 
-Notes 📝
+Supports role-based access (Admin and User).
 
-- src/app/core/services/data.ts is the main application service (providedIn: 'root').
-- app.config.ts centralizes providers (router, HTTP, firebase, auth) and should be passed to bootstrapApplication() in main.ts.
-- Feature folders follow a component-per-folder pattern: component.ts, component.html, component.css.
+Maintains login state using Angular signals.
 
-## 🔐 Authentication
+Includes logout and session validation functionality.
 
-- Register and log in users using local storage as mock persistence. 💾
+Automatically assigns admin privileges to predefined admin accounts.
 
-- Supports role-based access (Admin and User). 👑
+🌐 Social Login
+🔵 Google Login
 
-- Maintains login state using Angular signals ⚡.
+Uses Google Identity Services for authentication.
 
-- Includes logout and session validation functionality 🔄.
+Retrieves and decodes user information (name, email, profile picture).
 
-- Automatically assigns admin privileges to predefined admin accounts. 🧑‍💼
+Automatically registers or updates the user in the local data store.
 
-## 🌐 Social Login
+🔷 Facebook Login
 
-### 🔵 Google Login
+Integrates the Facebook SDK for secure authentication.
 
-- Uses Google Identity Services for authentication.  
-- Retrieves and decodes user information (name, email, profile picture).  
-- Automatically registers or updates the user in the local data store.  
+Requests access to basic profile and email information.
 
-### 🔷 Facebook Login
+Saves or updates user data locally for seamless future access.
 
-- Integrates the Facebook SDK for secure authentication.  
-- Requests access to basic profile and email information.  
-- Saves or updates user data locally for seamless future access.  
+🔁 Shared Features
 
-### 🔁 Shared Features
+Unified logic for saving, updating, and managing social user sessions.
 
-- Unified logic for saving, updating, and managing social user sessions.  
-- Automatic session restoration on reload.  
-- Secure logout for both Google and Facebook sessions.  
+Automatic session restoration on reload.
 
-## 🧑‍💼 Admin Dashboard
+Secure logout for both Google and Facebook sessions.
 
-A standalone component displaying mock data and key statistics for administrators.  
+🧑‍💼 Admin Dashboard
 
-- Displays registered users and order lists. 👥  
-- Shows total users, total orders, and pending orders. 📊  
-- Provides a quick overview of platform activity. 🔎  
-- Demonstrates how role-based access can control admin views. 🧱  
+A standalone component displaying mock data and key statistics for administrators.
 
-## 🔥 Firebase Integration
+Displays registered users and order lists.
 
-This project includes optional Firebase setup instructions for integrating a real backend. ☁️  
+Shows total users, total orders, and pending orders.
 
-- Authentication 🔐  
-- Firestore Database 🗄️  
-- Cloud Storage 💾  
-- Hosting for deployment 🚀  
+Provides a quick overview of platform activity.
 
-## 🔗 API Integration
+Demonstrates how role-based access can control admin views.
 
-This project uses the [DummyJSON API](https://dummyjson.com/) 🌍 to simulate backend data for products, carts, and user authentication.
+🔥 Firebase Integration
 
-*Base URL* 🌐  
+This project includes optional Firebase setup instructions for integrating a real backend.
 
-All requests use the public API:  
+Authentication
 
-bash  
-    https://dummyjson.com/  
+Firestore Database
 
-*Implementation* ⚙️  
-HTTP communication is handled through Angular’s HttpClient within the data.service.ts file located in:  
+Cloud Storage
 
-bash  
-src/app/core/services/data.ts  
+Hosting for deployment
 
-Example usage: 💡  
+🔗 API Integration
 
-bash  
- private apiUrl = 'https://dummyjson.com/products';
+This project uses the DummyJSON API
+ to simulate backend data for products, carts, and user authentication.
 
- getProducts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}?limit=100`);
-  }
+ | Feature                  | Endpoint                      | Method | Description                            |
+| ------------------------ | ----------------------------- | ------ | -------------------------------------- |
+| Get all products         | /products                     | GET    | Retrieve all products                  |
+| Get single product       | /products/{id}                | GET    | Retrieve details of a specific product |
+| Search products          | /products/search?q={query}    | GET    | Search by keyword                      |
+| Get categories           | /products/categories          | GET    | Retrieve all product categories        |
+| Get products by category | /products/category/{category} | GET    | Retrieve products in a given category  |
 
-*Common EndPoints* 🔗  
+Notes:
 
-| Feature 🧩                 | Endpoint 🌐                       | Method ⚙️ | Description 📝                           |
-| ------------------------ | ------------------------------- | ------ | -------------------------------------- |
-| Get all products 🛍️        | /products                     | GET    | Retrieve all products                  |
-| Get single product 🔎       | /products/{id}                | GET    | Retrieve details of a specific product |
-| Search products 🔍          | /products/search?q={query}    | GET    | Search by keyword                      |
-| Get categories 🏷️          | /products/categories          | GET    | Retrieve all product categories        |
-| Get products by category 📦 | /products/category/{category} | GET    | Retrieve products in a given category  |
+No backend setup is required.
 
-Notes 🗒️  
+All data is fetched directly from DummyJSON.
 
-- No backend setup is required.  
-- All data is fetched directly from DummyJSON.  
-- You can replace DummyJSON later with a real backend by updating the API URLs in data.ts.  
-
-## 🪄 Future Improvements
-
-1. Real API Integration – Replace DummyJSON with a live backend (.NET + SQL). ⚙️  
-2. Authentication & Authorization – Implement JWT-based login, signup, and role management (admin/user). 🔑  
-3. Recommendations – Smart suggestions based on user activity. 🧠  
-4. Unit & Integration Testing. 🧪  
-
-## 🖼️ ScreenShots
+You can replace DummyJSON later with a real backend by updating the API URLs in data.ts.
